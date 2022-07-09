@@ -21,13 +21,13 @@ fn main() {
         File::create(Path::new(&env::var("OUT_DIR").unwrap()).join("emojis.rs")).unwrap(),
     );
 
-    write!(
+    writeln!(
         &mut file,
-        "/// Compile time generated lookup table for emoji.\n"
+        "/// Compile time generated lookup table for emoji."
     )
     .unwrap();
-    write!(&mut file, "/// \n").unwrap();
-    write!(&mut file, "/// Taken from the Discord client\n").unwrap();
+    writeln!(&mut file, "/// ").unwrap();
+    writeln!(&mut file, "/// Taken from the Discord client").unwrap();
     write!(
         &mut file,
         "pub static EMOJI: phf::Map<&'static str, &'static str> = "
@@ -39,7 +39,7 @@ fn main() {
             .expect("emoji data to be valid");
     let mut m: Map<&str> = phf_codegen::Map::new();
 
-    for (_, emojis) in &categories {
+    for emojis in categories.values() {
         for emoji in emojis {
             for name in &emoji.names {
                 m.entry(name, &format!("\"{}\"", emoji.surrogates));
@@ -48,5 +48,5 @@ fn main() {
     }
 
     let m = m.build();
-    write!(&mut file, "{};\n", m).unwrap();
+    writeln!(&mut file, "{};", m).unwrap();
 }
