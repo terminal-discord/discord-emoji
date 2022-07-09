@@ -8,6 +8,9 @@ Find the unicode surrogates for a given emoji name
 fn main() {
     let emoji = discord_emoji::lookup("tm").unwrap();
     assert_eq!(emoji, "™️");
+    /// Support diversity surrogate combinations
+    let emoji = discord_emoji::lookup("muscle_tone1").unwrap();
+    assert_eq!(emoji, "💪🏻");
 }
 ```
 

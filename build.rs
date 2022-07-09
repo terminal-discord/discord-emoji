@@ -8,10 +8,11 @@ use std::io::Write;
 use std::path::Path;
 
 #[derive(Deserialize)]
-
 struct Emoji {
     pub names: Vec<String>,
     pub surrogates: String,
+    #[serde(rename = "diversityChildren")]
+    pub diversity_children: Option<Vec<Emoji>>,
 }
 
 fn main() {
@@ -41,6 +42,12 @@ fn main() {
 
     for emojis in categories.values() {
         for emoji in emojis {
+            #[cfg(feature = "diversity")]
+            for diversity_child in emoji.diversity_children.iter().flatten() {
+                for name in &diversity_child.names {
+                    m.entry(name, &format!("\"{}\"", diversity_child.surrogates));
+                }
+            }
             for name in &emoji.names {
                 m.entry(name, &format!("\"{}\"", emoji.surrogates));
             }

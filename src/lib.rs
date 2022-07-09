@@ -1,6 +1,7 @@
 include!(concat!(env!("OUT_DIR"), "/emojis.rs"));
 
 pub fn lookup(name: &str) -> Option<&str> {
+    println!("{}", EMOJI.len());
     EMOJI.get(name).copied()
 }
 

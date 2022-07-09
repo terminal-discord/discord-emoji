@@ -4,6 +4,10 @@ version = "0.1.0"
 authors = ["Noskcaj <kcajdev@gmail.com>"]
 edition = "2018"
 
+[features]
+default = ["diversity"]
+diversity = [] # Include diversity emojis, at the cost of slightly larger binaries
+
 [dependencies]
 phf = "0.10.1"
 
